@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CalendarDatePicker2 Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
@@ -44,27 +44,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<DateTime?> _dialogCalendarPickerValue = [
-    DateTime(2021, 8, 10),
-    DateTime(2021, 8, 13),
-  ];
-  List<DateTime?> _singleDatePickerValueWithDefaultValue = [
     DateTime.now(),
-  ];
-  List<DateTime?> _multiDatePickerValueWithDefaultValue = [
-    DateTime(today.year, today.month, 1),
-    DateTime(today.year, today.month, 5),
-    DateTime(today.year, today.month, 14),
-    DateTime(today.year, today.month, 17),
-    DateTime(today.year, today.month, 25),
-  ];
-  List<DateTime?> _rangeDatePickerValueWithDefaultValue = [
-    DateTime(1999, 5, 6),
-    DateTime(1999, 5, 21),
-  ];
-
-  List<DateTime?> _rangeDatePickerWithActionButtonsWithValue = [
-    DateTime.now(),
-    DateTime.now().add(const Duration(days: 5)),
+    DateTime.now().add(const Duration(days: 4)),
   ];
 
   @override
@@ -79,10 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             children: <Widget>[
               _buildCalendarDialogButton(),
-              _buildDefaultSingleDatePickerWithValue(),
-              _buildDefaultMultiDatePickerWithValue(),
-              _buildDefaultRangeDatePickerWithValue(),
-              _buildCalendarWithActionButtons(),
             ],
           ),
         ),
@@ -134,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final config = CalendarDatePicker2WithActionButtonsConfig(
       dayTextStyle: dayTextStyle,
       calendarType: CalendarDatePicker2Type.range,
-      selectedDayHighlightColor: Colors.purple[800],
+      selectedDayHighlightColor: const Color(0xff7F56D9),
+      // Colors.purple[800],
       closeDialogOnCancelTapped: true,
       firstDayOfWeek: 1,
       weekdayLabelTextStyle: const TextStyle(
@@ -251,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
               final values = await showCalendarDatePicker2Dialog(
                 context: context,
                 config: config,
-                dialogSize: const Size(325, 400),
+                dialogSize: const Size(450, 520),
                 borderRadius: BorderRadius.circular(15),
                 value: _dialogCalendarPickerValue,
                 dialogBackgroundColor: Colors.white,
@@ -271,180 +249,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildDefaultSingleDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      selectedDayHighlightColor: Colors.amber[900],
-      weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      weekdayLabelTextStyle: const TextStyle(
-        color: Colors.black87,
-        fontWeight: FontWeight.bold,
-      ),
-      firstDayOfWeek: 1,
-      controlsHeight: 50,
-      controlsTextStyle: const TextStyle(
-        color: Colors.black,
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-      ),
-      dayTextStyle: const TextStyle(
-        color: Colors.amber,
-        fontWeight: FontWeight.bold,
-      ),
-      disabledDayTextStyle: const TextStyle(
-        color: Colors.grey,
-      ),
-      selectableDayPredicate: (day) => !day
-          .difference(DateTime.now().subtract(const Duration(days: 3)))
-          .isNegative,
-    );
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 10),
-        const Text('Single Date Picker (With default value)'),
-        CalendarDatePicker2(
-          config: config,
-          value: _singleDatePickerValueWithDefaultValue,
-          onValueChanged: (dates) =>
-              setState(() => _singleDatePickerValueWithDefaultValue = dates),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Selection(s):  '),
-            const SizedBox(width: 10),
-            Text(
-              _getValueText(
-                config.calendarType,
-                _singleDatePickerValueWithDefaultValue,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 25),
-      ],
-    );
-  }
-
-  Widget _buildDefaultMultiDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.multi,
-      selectedDayHighlightColor: Colors.indigo,
-    );
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 10),
-        const Text('Multi Date Picker (With default value)'),
-        CalendarDatePicker2(
-          config: config,
-          value: _multiDatePickerValueWithDefaultValue,
-          onValueChanged: (dates) =>
-              setState(() => _multiDatePickerValueWithDefaultValue = dates),
-        ),
-        const SizedBox(height: 10),
-        Wrap(
-          children: [
-            const Text('Selection(s):  '),
-            const SizedBox(width: 10),
-            Text(
-              _getValueText(
-                config.calendarType,
-                _multiDatePickerValueWithDefaultValue,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              softWrap: false,
-            ),
-          ],
-        ),
-        const SizedBox(height: 25),
-      ],
-    );
-  }
-
-  Widget _buildDefaultRangeDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.range,
-      selectedDayHighlightColor: Colors.teal[800],
-      weekdayLabelTextStyle: const TextStyle(
-        color: Colors.black87,
-        fontWeight: FontWeight.bold,
-      ),
-      controlsTextStyle: const TextStyle(
-        color: Colors.black,
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 10),
-        const Text('Range Date Picker (With default value)'),
-        CalendarDatePicker2(
-          config: config,
-          value: _rangeDatePickerValueWithDefaultValue,
-          onValueChanged: (dates) =>
-              setState(() => _rangeDatePickerValueWithDefaultValue = dates),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Selection(s):  '),
-            const SizedBox(width: 10),
-            Text(
-              _getValueText(
-                config.calendarType,
-                _rangeDatePickerValueWithDefaultValue,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 25),
-      ],
-    );
-  }
-
-  Widget _buildCalendarWithActionButtons() {
-    final config = CalendarDatePicker2WithActionButtonsConfig(
-      calendarType: CalendarDatePicker2Type.range,
-      disableModePicker: true,
-    );
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 10),
-        const Text('Date Picker With Action Buttons'),
-        CalendarDatePicker2WithActionButtons(
-          config: config,
-          value: _rangeDatePickerWithActionButtonsWithValue,
-          onValueChanged: (dates) => setState(
-              () => _rangeDatePickerWithActionButtonsWithValue = dates),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Selection(s):  '),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Text(
-                _getValueText(
-                  config.calendarType,
-                  _rangeDatePickerWithActionButtonsWithValue,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 25),
-      ],
     );
   }
 }

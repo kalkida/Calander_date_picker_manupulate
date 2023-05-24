@@ -61,6 +61,19 @@ class CalendarDatePicker2Config {
     this.customModePickerIcon,
     this.modePickerTextHandler,
     this.selectedRangeDayTextStyle,
+
+    ////laba
+    ///
+    ///
+    this.onTodayTapped,
+    this.onThisWeekTapped,
+    this.onLastWeekTapped,
+    this.onLastMonthTapped,
+    this.onAllTimeTapped,
+    this.onThisMonthTapped,
+    this.onThisYearTapped,
+    this.onLastYearTapped,
+    this.onYesterdayTapped,
   })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
@@ -119,11 +132,11 @@ class CalendarDatePicker2Config {
   final TextStyle? selectedRangeDayTextStyle;
 
   /// The highlight color for selected day(s)
-  final Color? selectedDayHighlightColor;
+  Color? selectedDayHighlightColor;
 
   /// The highlight color for day(s) included in the selected range
   /// Only applicable when [calendarType] is [CalendarDatePicker2Type.range]
-  final Color? selectedRangeHighlightColor;
+  Color? selectedRangeHighlightColor;
 
   /// Custom text style for disabled calendar day(s)
   final TextStyle? disabledDayTextStyle;
@@ -166,6 +179,34 @@ class CalendarDatePicker2Config {
 
   /// Function to control mode picker displayed text
   final CalendarModePickerTextHandler? modePickerTextHandler;
+
+  /////laba
+  ///
+  ///
+  final Function? onTodayTapped;
+
+  /// Callback for the "Last Week" button tap.
+  final Function? onLastWeekTapped;
+
+  /// Callback for the "This Week" button tap.
+  final Function? onThisWeekTapped;
+
+  /// Callback for the "This Month" button tap.
+  final Function? onThisMonthTapped;
+
+  /// Callback for the "This Month" button tap.
+  final Function? onLastMonthTapped;
+
+  /// Callback for the "This Month" button tap.
+  final Function? onAllTimeTapped;
+
+  final Function? onThisYearTapped;
+
+  /// Callback for the "Last Year" button tap.
+  final Function? onLastYearTapped;
+
+  /// Callback for the "Yesterday" button tap.
+  final Function? onYesterdayTapped;
 
   CalendarDatePicker2Config copyWith({
     CalendarDatePicker2Type? calendarType,

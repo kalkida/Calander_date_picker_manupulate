@@ -8,8 +8,11 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  bloc: ^8.1.1
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.2
+  freezed_annotation: ^2.2.0
 
 dev_dependencies:
   flutter_test:
